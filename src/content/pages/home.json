@@ -1,274 +1,243 @@
 {
   "meta": {
-    "title": "CKB DAO Shelter | Model a Nervos DAO deposit",
-    "description": "Explore an example Nervos DAO deposit, the 102 CKB cell requirement, supply changes, and the two-step withdrawal path."
+    "title": "CKB Upgrade Watch | Understand script upgrade risk",
+    "description": "Inspect a CKB Script reference, learn what its hash type says about code changes, and save scripts for later review."
   },
   "hero": {
-    "eyebrow": "A clearer first Nervos DAO deposit",
-    "title": "CKB DAO, clearly. ",
-    "titleMuted": "Before you deposit.",
-    "description": "Try an editable CKB estimate, see the deposit-cell requirement, and review the Nervos DAO withdrawal path.",
-    "button": {
-      "href": "#estimate",
-      "label": "Use the estimator"
-    },
-    "background": "/assets/brand/ckb-cell-field.svg",
-    "backgroundAlt": "A network of CKB data cells surrounding the DAO scenario tool",
+    "eyebrow": "A clearer view of CKB script changes",
+    "title": "Know what your asset depends on. ",
+    "titleMuted": "Before you trust it.",
+    "description": "Inspect a CKB Script's current code cell and transaction evidence, then save it for a manual recheck.",
+    "button": { "href": "#demo", "label": "Check a script" },
+    "background": "/assets/brand/upgrade-watch-field.svg",
+    "backgroundAlt": "A CKB script reference connected to a code cell and a change record",
     "stats": [
-      {
-        "value": "102 CKB",
-        "label": "Deposit-cell space requirement"
-      },
-      {
-        "value": "180 epochs",
-        "label": "Minimum lock from the deposit epoch"
-      },
-      {
-        "value": "2 phases",
-        "label": "Withdrawal request, then completion"
-      },
-      {
-        "value": "No wallet",
-        "label": "Scenario only, no chain connection"
-      }
+      { "value": "4 hash types", "label": "Recognized from Script JSON" },
+      { "value": "Live lookup", "label": "Current Type ID cell and lock evidence" },
+      { "value": "Read only", "label": "No wallet connection or transaction" },
+      { "value": "Local list", "label": "Watchlist stays in this browser" }
     ]
   },
   "changes": {
-    "eyebrow": "Before the first deposit",
-    "title": "See what changes when CKB enters the DAO",
+    "eyebrow": "What a holder can check",
+    "title": "Understand the dependency behind a script",
     "cards": [
       {
-        "title": "Compare a balance in or out of DAO",
-        "description": "A fixed balance can represent a smaller share of a supply that grows through secondary issuance. This model makes that scenario visible.",
-        "image": "/assets/brand/share-drift.svg",
-        "imageAlt": "A fixed CKB balance compared against a growing network supply",
+        "title": "See how the script finds its code",
+        "description": "A data hash points to a specific binary hash. A type hash finds code through a cell's Type Script, so the referenced code can change.",
+        "image": "/assets/brand/reference-types.svg",
+        "imageAlt": "Comparison between a fixed data hash reference and a type hash reference",
         "panel": {
-          "label": "MODEL INPUT",
-          "status": "ILLUSTRATIVE",
-          "count": "2.0%",
-          "compare": "yearly rate used in this example",
-          "bars": [18, 26, 22, 34, 29, 42, 36]
+          "label": "REFERENCE CHECK",
+          "status": "4 TYPES",
+          "count": "data → type",
+          "compare": "Fixed binary hashes vs replaceable cell reference",
+          "bars": [18, 29, 22, 39, 31, 45, 37]
         }
       },
       {
-        "title": "Set aside 102 CKB for the cell",
-        "description": "A standard DAO deposit uses 102 CKB for cell space. This estimate counts only the CKB above that amount.",
-        "image": "/assets/brand/deposit-cell.svg",
-        "imageAlt": "A Nervos DAO deposit cell divided into occupied and eligible CKB",
+        "title": "Know where upgrade authority lives",
+        "description": "The live code cell lock authorizes spending; its Type Script also constrains replacement outputs. The lock alone does not reveal whether control is single-key, multisig, or custom.",
+        "image": "/assets/brand/code-cell-authority.svg",
+        "imageAlt": "A code cell whose lock authorizes spending and whose Type Script constrains replacement outputs",
         "panel": {
-          "label": "DEPOSIT CELL",
-          "status": "NERVOS DAO",
-          "message": "102 CKB is set aside for cell space.",
-          "tags": ["OCCUPIED", "FEES ADDITIONAL"],
-          "route": "ELIGIBLE CAPACITY",
-          "to": "BALANCE - 102 CKB"
+          "label": "AUTHORITY",
+          "status": "ON-CHAIN CHECK NEEDED",
+          "message": "Read the live code cell lock before relying on an upgradeability assessment.",
+          "tags": ["LOCK CONTROLS SPENDING", "CUSTOM LOGIC POSSIBLE"],
+          "route": "SCRIPT JSON",
+          "to": "CODE CELL LOCK"
         }
       },
       {
-        "title": "Understand the lock before depositing",
-        "description": "The final withdrawal step is available after at least 180 epochs. Calendar time varies with epoch length.",
-        "image": "/assets/brand/epoch-lock.svg",
-        "imageAlt": "A 180-epoch lock period shown on a CKB network timeline",
+        "title": "Trace changes with transaction evidence",
+        "description": "A useful change record should link each replaced code cell to its transaction and block, so holders can inspect what changed and when.",
+        "image": "/assets/brand/upgrade-history.svg",
+        "imageAlt": "A timeline from the first code cell through replacements to the current cell",
         "panel": {
-          "label": "MINIMUM LOCK",
-          "status": "PROTOCOL",
-          "start": "DEPOSIT",
-          "end": "MATURED",
-          "message": "You can request earlier; completion waits for 180 epochs.",
-          "source": "NERVOS DAO",
-          "time": "180 EPOCHS"
+          "label": "CHANGE HISTORY",
+          "status": "LIVE LOOKUP",
+          "start": "DEPLOYED",
+          "end": "CURRENT",
+          "message": "Current history is traced from transaction inputs and each version links to its transaction.",
+          "source": "TX + BLOCK",
+          "time": "VERIFY"
         }
       },
       {
-        "title": "Budget for the full withdrawal path",
-        "description": "Withdrawal uses two transactions: first request, then complete after the lock ends. The final step returns your CKB and any increase.",
-        "image": "/assets/brand/withdrawal-path.svg",
-        "imageAlt": "The Nervos DAO withdrawal request and completion steps",
+        "title": "Keep the scripts you care about together",
+        "description": "Save a script locally and rerun its chain check when you choose. Background monitoring and alerts are not included.",
+        "image": "/assets/brand/holder-watchlist.svg",
+        "imageAlt": "A local watchlist of saved CKB scripts with manual rechecking and no alerts",
         "panel": {
-          "label": "WITHDRAWAL",
-          "status": "TWO-PHASE",
+          "label": "HOLDER LIST",
+          "status": "LOCAL PREVIEW",
           "rows": [
-            { "label": "Request", "value": "Phase 01" },
-            { "label": "Complete", "value": "Phase 02" },
-            { "label": "Wallet", "value": "Not connected" }
+            { "label": "Saved scripts", "value": "This device" },
+            { "label": "Manual recheck", "value": "Available" },
+            { "label": "Alerts", "value": "Not included" }
           ]
         }
       }
     ]
   },
   "how": {
-    "eyebrow": "How to use the model",
-    "title": "Inspect the assumptions before taking action",
-    "body": "Change the inputs, compare both outputs, and verify the protocol mechanics independently. Nothing here connects to a wallet or submits a transaction.",
+    "eyebrow": "Try the current preview",
+    "title": "From Script JSON to a clearer next step",
+    "body": "The checker reads the Script and queries current CKB indexer data. It reports the code cell lock and transaction history when those links can be verified; custom lock logic remains unidentified.",
     "steps": [
       {
-        "title": "Choose a balance",
-        "description": "Enter the CKB amount you are considering. The model sets aside 102 CKB for the cell, then estimates the increase on the remainder.",
-        "image": "/assets/brand/deposit-cell.svg",
-        "imageAlt": "CKB cells with occupied capacity separated from the amount being modeled"
+        "title": "Paste a CKB Script",
+        "description": "Use a Script object with code_hash, hash_type and args. The JoyID example resolves against mainnet chain data."
       },
       {
-        "title": "Set the scenario",
-        "description": "Choose a yearly rate and time period. You can change the rate; it is not a live network value.",
-        "image": "/assets/brand/epoch-lock.svg",
-        "imageAlt": "A CKB network timeline showing the minimum DAO lock"
+        "title": "Understand the reference",
+        "description": "The checker separates fixed data references from type-hash references, then looks for a matching live Type ID code cell."
       },
       {
-        "title": "Read both views",
-        "description": "Compare the estimated DAO increase with how the same balance could change outside DAO under the same assumption.",
-        "image": "/assets/brand/share-drift.svg",
-        "imageAlt": "A balance compared with the network supply growth scenario"
+        "title": "Save it for review",
+        "description": "Keep the Script and network in this browser's local watchlist, then manually analyze it again when needed."
       },
       {
-        "title": "Check the exit path",
-        "description": "Review the 180-epoch minimum and both withdrawal phases. Verify current fees and transaction details before signing.",
-        "image": "/assets/brand/withdrawal-path.svg",
-        "imageAlt": "Two steps in the Nervos DAO withdrawal path"
+        "title": "Check the evidence yourself",
+        "description": "Open the linked transaction evidence in Explorer. A recognized lock pattern is not an identity verification or safety verdict."
       }
     ]
   },
   "productScope": {
-    "eyebrow": "Product scope",
-    "title": "From the first estimate to the last withdrawal",
-    "description": "This working prototype calculates in your browser but does not read your wallet or live CKB data. The full version is planned to help holders understand, track, and manage each Nervos DAO position.",
-    "currentTitle": "In this preview",
+    "eyebrow": "What this test can prove",
+    "title": "A small holder-facing test, with clear limits",
+    "description": "This MVP tests whether holders find live code-cell and upgrade-history evidence understandable and useful. It is not a security verdict or background monitoring service.",
+    "currentTitle": "Works in this MVP",
     "current": [
       {
-        "title": "Edit a CKB scenario",
-        "description": "Enter a balance, choose an assumed annual rate, and compare periods from 1 to 60 months."
+        "title": "Scan an address or Script",
+        "description": "Query live cells, CKB capacity, and Script JSON from the selected mainnet or testnet indexer."
       },
       {
-        "title": "Compare DAO and outside DAO",
-        "description": "See an estimated DAO increase beside a modeled change in supply share outside DAO. The comparison is not CKB removed from a wallet."
+        "title": "Inspect the matching code cell",
+        "description": "For Type ID references, show the current code cell lock and recognize the standard single-signature pattern."
       },
       {
-        "title": "Understand the deposit and exit path",
-        "description": "See the 102 CKB cell-space assumption, the 180-epoch lock, and the request and completion withdrawal steps."
+        "title": "Trace transaction evidence",
+        "description": "Follow up to 25 cell versions and link each result to its transaction in Explorer."
       },
       {
-        "title": "Inspect the math and sources",
-        "description": "Read the simplified formula, assumptions, model limits, and links to Nervos protocol references."
+        "title": "Show chain evidence and limits",
+        "description": "The result marks incomplete searches, unknown locks, and histories that could not be fully traced."
       }
     ],
-    "plannedTitle": "Planned for the full version",
+    "plannedTitle": "Not included in this prototype",
     "planned": [
       {
-        "title": "Read a wallet's DAO positions",
-        "description": "Connect a supported CKB wallet to list multiple deposits and pending withdrawals. Reading the address does not give the app control of funds."
+        "title": "Background monitoring",
+        "description": "Watch saved Scripts continuously and detect changes without a manual recheck."
       },
       {
-        "title": "Use current DAO data",
-        "description": "Read each deposit's amount, deposit epoch, and on-chain DAO data to show its estimated increase in CKB, withdrawal status, and when the final step becomes available. Future amounts remain estimates."
+        "title": "Notifications",
+        "description": "Send alerts only after validating demand, delivery reliability, and privacy requirements."
       },
       {
-        "title": "Prepare a deposit for wallet approval",
-        "description": "Show the amount, cell space, destination, and network fee before the user reviews and signs the transaction in their wallet."
+        "title": "Custom lock interpretation",
+        "description": "Explain multisig or arbitrary lock code. Unknown lock logic is shown without guessing."
       },
       {
-        "title": "Guide both withdrawal steps",
-        "description": "Show the request and completion steps, expected CKB, current fees, and the 180-epoch eligibility from the deposit. The first step does not return CKB to your wallet; after you sign the final step, the original deposit capacity plus the DAO increase is sent to the chosen address, minus fees."
-      },
-      {
-        "title": "Send Telegram reminders",
-        "description": "Opt in for a reminder as a deposit approaches 180 epochs, then another when live chain data confirms the final withdrawal step is ready. Each message links to the position; the bot only reminds and never signs or sends transactions."
-      },
-      {
-        "title": "Keep a transaction history",
-        "description": "Show deposits, withdrawal requests, and completed withdrawals with explorer links. CKB remains the amount you receive; an optional USD view is only a price estimate with its update time shown."
+        "title": "Unbounded history",
+        "description": "Long or complex histories can stop at the current request budget and be reported as incomplete."
       }
     ]
   },
   "protocolNotes": {
-    "title": "What the model keeps\nin view",
+    "title": "Understand the\nlimits of a result",
     "items": [
       {
-        "statement": "The standard 102 CKB cell requirement is excluded from this estimate.",
-        "source": "Nervos DAO",
-        "detail": "102 CKB is the standard cell assumption"
+        "statement": "A data, data1, or data2 hash points to a specific script binary hash.",
+        "source": "CKB DOCUMENTATION",
+        "detail": "Fixed binary reference"
       },
       {
-        "statement": "The real DAO uses network rate values from deposit through withdrawal.",
-        "source": "RFC 0023",
-        "detail": "Protocol mechanism"
+        "statement": "A type hash finds code through a cell with a matching Type Script.",
+        "source": "CKB DOCUMENTATION",
+        "detail": "Code may be replaced"
       },
       {
-        "statement": "A withdrawal request is followed by a separate completion phase.",
-        "source": "Nervos DAO",
-        "detail": "Two-phase withdrawal"
+        "statement": "The lock authorizes spending the code cell; its Type Script validates replacement outputs.",
+        "source": "CHECK THE LOCK",
+        "detail": "Controller not inferred"
       },
       {
-        "statement": "The scenario rate is not a live APY, wallet reading, or return forecast.",
-        "source": "Model boundary",
-        "detail": "No chain connection"
+        "statement": "The app can look up current cells, but it does not monitor changes or send alerts in the background.",
+        "source": "MVP LIMIT",
+        "detail": "Manual recheck"
       }
     ]
   },
   "faq": {
     "eyebrow": "FAQ",
-    "title": "Questions to settle before you deposit",
+    "title": "What the preview does and does not tell you",
     "card": {
-      "title": "Check the protocol source",
-      "text": "Use the current Nervos documentation and transaction details before signing.",
+      "title": "Read the CKB rules",
+      "text": "Check the official explanation of data hashes, type hashes, and script upgrades.",
       "button": {
-        "href": "#sources",
-        "label": "View sources"
+        "href": "https://docs.nervos.org/docs/tech-explanation/data-type-diff",
+        "label": "Open CKB documentation"
       }
     },
     "items": [
       {
-        "q": "Is this connected to the CKB network?",
-        "a": "No. The prototype has no wallet connection, RPC request, live rate, fee quote, or transaction submission."
+        "q": "Does a type hash prove that someone can upgrade the script?",
+        "a": "It means the code hash is resolved through a matching Type Script cell. The lock authorizes spending, while the Type Script constrains replacement outputs. The checker shows both on-chain scripts but cannot infer a real-world controller from unfamiliar lock logic."
       },
       {
-        "q": "Is this a promised return?",
-        "a": "No. It is a simplified scenario based on an editable constant rate and duration. The live DAO uses accumulated-rate values recorded by the protocol."
+        "q": "Can this page check any token or dApp?",
+        "a": "It can scan a CKB address or analyze Script JSON. The MVP searches Type ID cells, reports current capacity and scripts, and traces up to 25 cell versions. It does not calculate token balances or interpret arbitrary lock code."
       },
       {
-        "q": "Does the 102 CKB cell space increase too?",
-        "a": "No. The standard DAO cell uses 102 CKB for storage. The estimate applies to the remaining amount. Network fees are extra."
+        "q": "Are the examples real deployed contracts?",
+        "a": "The Type reference example uses JoyID's published mainnet code hash and queries the selected chain. The data reference sample is illustrative and has no matching live binary lookup."
       },
       {
-        "q": "How long is the minimum lock?",
-        "a": "The protocol minimum is 180 epochs from the deposit epoch. Calendar time varies with epoch length."
+        "q": "Does saving a script monitor it or send alerts?",
+        "a": "No. Saving stores the Script and network in this browser. You can manually run the analysis again; background monitoring and notifications are not implemented."
       },
       {
-        "q": "Can I withdraw in one transaction?",
-        "a": "Withdrawal has a request phase and a separate completion phase after maturity conditions are met. Review the current protocol process before acting."
+        "q": "Is my pasted script sent to a server?",
+        "a": "The Script or address is sent to this app's API for a read-only query through the selected public CKB provider. Saved watchlist entries remain in this browser's local storage. Do not paste secrets."
       },
       {
-        "q": "Does the estimate include primary issuance or CKB price changes?",
-        "a": "No. The model focuses on a secondary-issuance scenario and does not include primary issuance, market price changes, transaction fees, or custom lock scripts."
+        "q": "Does a replaceable code reference mean my funds are unsafe?",
+        "a": "Not by itself. The reference type does not tell you what the code does, who controls its lock, or whether a change would affect your particular asset. Inspect the evidence before drawing a conclusion."
       }
     ]
   },
   "sources": {
-    "eyebrow": "Protocol references",
-    "title": "Read the rules behind the model",
+    "eyebrow": "Check the source material",
+    "title": "See the rules and compare existing tools",
     "button": {
-      "href": "https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md",
-      "label": "Open RFC 0023"
+      "href": "https://docs.nervos.org/docs/script/script-upgrade-workflow",
+      "label": "Read the upgrade workflow"
     },
     "items": [
       {
-        "title": "DAO deposit and withdrawal",
-        "description": "Read the Nervos RFC covering deposits, maturity, withdrawal requests, and completion.",
-        "href": "https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md",
-        "image": "/assets/brand/withdrawal-path.svg",
-        "imageAlt": "The two steps used to withdraw from Nervos DAO"
+        "title": "Data hash vs. type hash",
+        "description": "Official explanation of fixed binary references, type-hash references, and the need to inspect a code cell's lock.",
+        "href": "https://docs.nervos.org/docs/tech-explanation/data-type-diff",
+        "image": "/assets/brand/reference-types.svg",
+        "imageAlt": "Illustrated comparison of data hash and type hash references"
       },
       {
-        "title": "Nervos economics and the DAO",
-        "description": "Review the network's economics overview and its explanation of the Nervos DAO.",
-        "href": "https://docs.nervos.org/docs/basics/concepts/economics/",
-        "image": "/assets/brand/share-drift.svg",
-        "imageAlt": "A fixed CKB balance compared with network supply growth"
+        "title": "Recommended script upgrade workflow",
+        "description": "How Type ID cells and lock scripts can be used during upgrades and to freeze code later.",
+        "href": "https://docs.nervos.org/docs/script/script-upgrade-workflow",
+        "image": "/assets/brand/code-cell-authority.svg",
+        "imageAlt": "Illustration showing that a code cell lock authorizes spending and its Type Script constrains replacement outputs"
       },
       {
-        "title": "DAO script and cell rules",
-        "description": "Inspect the DAO script, cell structure, and protocol constraints in Nervos documentation.",
-        "href": "https://docs.nervos.org/docs/script/dao/",
-        "image": "/assets/brand/epoch-lock.svg",
-        "imageAlt": "The 180-epoch minimum shown across connected CKB blocks"
+        "title": "CKB Contract Flow",
+        "description": "Existing open-source tool for contract behavior, cell transitions, transaction decoding, and deployment references.",
+        "href": "https://github.com/gpBlockchain/ckb-contract-flow-html",
+        "image": "/assets/brand/upgrade-history.svg",
+        "imageAlt": "Illustration of code deployment history and transaction evidence"
       }
     ]
   }
