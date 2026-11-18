@@ -1,5 +1,6 @@
 ---
 import home from '../../content/pages/home.json';
+import { sampleTypeScript } from '../../upgrade-watch';
 import Button from '../ui/Button.astro';
 const { hero } = home;
 ---
@@ -15,73 +16,54 @@ const { hero } = home;
     </div>
   </div>
   <div class="hero-media">
-    <div class="product" id="estimate">
+    <div class="product" id="demo">
       <img class="bg" src={hero.background} alt={hero.backgroundAlt} width="1800" height="1000" fetchpriority="high" />
-      <div class="dao-tool">
-        <form class="tool-inputs" id="estimate-form">
+      <div class="script-tool">
+        <form class="tool-inputs" id="script-check-form">
           <div class="tool-heading">
-            <p class="t-eyebrow">Holder scenario</p>
-            <span class="tool-local">Runs in this browser</span>
+            <p class="t-eyebrow">On-chain inspection</p>
+            <span class="tool-local">Read only · no wallet needed</span>
           </div>
-          <div class="field balance-field">
-            <label for="balance-input">CKB balance</label>
-            <div class="amount-input">
-              <input id="balance-input" name="balance" type="number" min="0" max="1000000000000" step="1" inputmode="decimal" value="100000" aria-describedby="balance-hint balance-error" />
-              <span>CKB</span>
+          <div class="mode-row">
+            <div class="sample-switch" role="group" aria-label="Choose what to inspect">
+              <button type="button" data-inspect-mode="address" aria-pressed="false">Wallet address</button>
+              <button type="button" data-inspect-mode="script" aria-pressed="true">Script JSON</button>
             </div>
-            <p class="field-hint" id="balance-hint">Enter the balance you are considering.</p>
-            <p class="field-error" id="balance-error" hidden>Enter an amount from 0 to 1,000,000,000,000 CKB.</p>
+            <label class="network-field">Network
+              <select name="network" id="network-select"><option value="mainnet">Mainnet</option><option value="testnet">Testnet</option></select>
+            </label>
           </div>
-          <fieldset class="preset-field">
-            <legend>Quick amounts</legend>
-            <div class="preset-list">
-              <button type="button" data-preset="10000" aria-pressed="false">10k</button>
-              <button type="button" data-preset="100000" aria-pressed="true">100k</button>
-              <button type="button" data-preset="1000000" aria-pressed="false">1m</button>
-            </div>
-          </fieldset>
-          <div class="field range-field">
-            <div class="range-heading">
-              <label for="rate-input">Annual issuance scenario</label>
-              <output id="rate-output" for="rate-input">2.0%</output>
-            </div>
-            <input id="rate-input" name="rate" type="range" min="0" max="5" step="0.1" value="2" />
-            <p class="field-hint">Editable assumption, not a live rate or APY.</p>
+          <div class="editor-field" data-inspect-field="address" hidden>
+            <label for="wallet-address">CKB wallet address</label>
+            <input id="wallet-address" name="address" type="text" placeholder="ckb1… or ckt1…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="address-hint" />
+            <p class="field-hint" id="address-hint">Scans live cells and CKB capacity for this address. It is sent to this app's API and then to the selected public CKB provider.</p>
           </div>
-          <div class="field range-field">
-            <div class="range-heading">
-              <label for="months-input">Time in DAO</label>
-              <output id="months-output" for="months-input">12 months</output>
+          <div class="editor-field" data-inspect-field="script" hidden>
+            <label for="script-json">Paste a CKB Script</label>
+            <textarea id="script-json" name="script" rows="7" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="script-hint">{sampleTypeScript}</textarea>
+            <p class="field-hint" id="script-hint">Example uses JoyID's published mainnet code hash. Analysis sends this Script to the app API and selected public CKB provider.</p>
+            <div class="sample-switch sample-switch--examples" role="group" aria-label="Choose a script reference example">
+              <button type="button" data-script-sample="type" aria-pressed="true">Type reference</button>
+              <button type="button" data-script-sample="immutable" aria-pressed="false">Data reference</button>
             </div>
-            <input id="months-input" name="months" type="range" min="1" max="60" step="1" value="12" />
-            <p class="field-hint">The protocol minimum is 180 epochs.</p>
           </div>
+          <button class="scan-button" id="inspect-submit" type="submit">Scan address</button>
+          <p class="provider-note">Read-only lookup. No transaction is created or signed. Watchlist entries stay in this browser.</p>
         </form>
         <aside class="tool-result" aria-labelledby="result-title">
-          <p class="t-eyebrow" id="result-title">Estimated CKB increase</p>
-          <p class="result-number" aria-live="polite">
-            <output id="compensation-output">1,997.96</output>
-            <span>CKB</span>
-          </p>
-          <p class="result-period" id="result-period">Estimated increase over 12 months using a 2.0% yearly rate assumption</p>
-          <dl class="result-breakdown">
-            <div>
-              <dt>CKB counted by estimate</dt>
-              <dd><output id="eligible-output">99,898</output> CKB</dd>
-            </div>
-            <div>
-              <dt>Reserved cell space</dt>
-              <dd>102 CKB</dd>
-            </div>
-            <div>
-              <dt>Estimated effect outside DAO</dt>
-              <dd><output id="outside-drift-output">1,960.78</output> CKB equivalent</dd>
-            </div>
-          </dl>
-          <p class="deposit-status" id="deposit-status" role="status">
-            99,898 CKB is counted after setting aside cell space. Network fees are extra.
-          </p>
-          <p class="result-note">This comparison value is not CKB taken from a wallet. No wallet or live network data is used.</p>
+          <div class="result-head"><p class="t-eyebrow">Chain report</p><span class="result-state" id="result-state">Ready</span></div>
+          <h2 class="result-title" id="result-title" aria-live="polite">Inspect a wallet or script</h2>
+          <p class="result-period" id="result-summary">The report will show live cell data, the block snapshot and what the script reference proves.</p>
+          <dl class="result-breakdown" id="result-breakdown" hidden></dl>
+          <p class="check-status" id="check-status" role="status">No chain lookup has been made yet.</p>
+          <section class="result-evidence" id="result-evidence" aria-label="On-chain evidence" hidden></section>
+          <section class="result-scripts" id="result-scripts" aria-label="Scripts found in wallet" hidden></section>
+          <button class="action-button action-primary" id="save-script" type="button" disabled>Save script</button>
+          <div class="saved-scripts">
+            <div class="saved-heading"><h3>Watchlist</h3><span>This device only</span></div>
+            <p id="saved-empty" class="field-hint">No saved scripts yet.</p>
+            <ul id="saved-script-list" aria-label="Scripts saved in this browser"></ul>
+          </div>
         </aside>
       </div>
     </div>
@@ -96,8 +78,8 @@ const { hero } = home;
   </div>
 </section>
 <script>
-  import { bindEstimateControls } from '../../estimate-controller';
-  bindEstimateControls();
+  import { bindUpgradeWatch } from '../../upgrade-watch';
+  bindUpgradeWatch();
 </script>
 <style>
   .hero { width: 100%; max-width: var(--canvas); margin: 0 auto; padding: 72px 20px 88px; display: flex; flex-direction: column; align-items: center; gap: 52px; }
@@ -110,40 +92,76 @@ const { hero } = home;
   .product { position: relative; width: 100%; min-height: 560px; padding: 36px; display: flex; justify-content: center; align-items: center; border-radius: 16px; overflow: clip; background: var(--accent-soft); }
   .product::after { position: absolute; inset: 0; content: ""; background: rgba(241, 247, 253, 0.26); }
   .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .dao-tool { position: relative; z-index: 1; width: 92%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.88fr); gap: 16px; }
-  .tool-inputs, .tool-result { min-width: 0; padding: 26px; border: 1px solid rgba(35, 77, 128, 0.14); border-radius: 16px; background: rgba(255, 255, 255, 0.96); box-shadow: 0 18px 52px rgba(31, 71, 121, 0.12); }
-  .tool-inputs { display: flex; flex-direction: column; gap: 20px; }
-  .tool-heading, .range-heading, .amount-input, .result-number { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .script-tool { position: relative; z-index: 1; width: 92%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.88fr); gap: 16px; }
+  .tool-inputs, .tool-result { min-width: 0; padding: 24px; border: 1px solid rgba(35, 77, 128, 0.14); border-radius: 16px; background: rgba(255, 255, 255, 0.96); box-shadow: 0 18px 52px rgba(31, 71, 121, 0.12); }
+  .tool-inputs { display: flex; flex-direction: column; gap: 16px; }
+  .tool-heading, .result-number { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .tool-heading { padding-bottom: 2px; }
   .tool-heading .t-eyebrow { margin: 0; color: var(--accent-strong); }
   .tool-local { color: var(--grey); font-size: 12px; }
-  .field { display: flex; min-width: 0; flex-direction: column; gap: 8px; }
-  .field label, .preset-field legend { color: var(--black); font-size: 13px; font-weight: 650; }
-  .amount-input { min-height: 48px; padding: 0 14px; border: 1px solid var(--grey-20); border-radius: 8px; }
-  .amount-input input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--black); background: transparent; font-size: 18px; font-weight: 600; }
-  .amount-input span { color: var(--grey); font-size: 13px; }
-  .field-hint, .result-note { margin: 0; color: var(--grey); font-size: 12px; line-height: 1.5; }
-  .field-error { margin: 0; color: #a32e37; font-size: 12px; }
-  .preset-field { min-width: 0; margin: 0; padding: 0; border: 0; }
-  .preset-field legend { margin-bottom: 8px; }
-  .preset-list { display: flex; gap: 8px; }
-  .preset-list button { min-width: 58px; padding: 7px 12px; border: 1px solid var(--grey-20); border-radius: 999px; color: var(--black); background: var(--white); cursor: pointer; font-size: 12px; }
-  .preset-list button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent-strong); background: var(--accent-soft); }
-  .range-heading label { color: var(--black); font-size: 13px; font-weight: 650; }
-  .range-heading output { color: var(--accent-strong); font-family: var(--font-mono); font-size: 12px; }
-  .range-field input { width: 100%; accent-color: var(--accent); }
+  .mode-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .network-field { display: flex; align-items: center; gap: 7px; color: var(--grey); font-size: 11px; }
+  .network-field select { min-height: 34px; padding: 6px 26px 6px 9px; border: 1px solid var(--grey-20); border-radius: 7px; color: var(--black); background: var(--white); font-size: 12px; }
+  .editor-field { display: flex; min-width: 0; flex-direction: column; gap: 8px; }
+  .editor-field[hidden], .result-breakdown[hidden], .result-evidence[hidden], .result-scripts[hidden] { display: none; }
+  .editor-field label { color: var(--black); font-size: 13px; font-weight: 650; }
+  .sample-switch { display: inline-flex; align-self: flex-start; gap: 4px; padding: 4px; border: 1px solid var(--grey-20); border-radius: 8px; background: #f5f8fc; }
+  .sample-switch button { min-height: 34px; padding: 7px 11px; border: 0; border-radius: 6px; color: var(--grey); background: transparent; cursor: pointer; font-size: 12px; }
+  .sample-switch button[aria-pressed="true"] { color: var(--accent-strong); background: var(--white); box-shadow: 0 1px 4px rgba(31, 71, 121, 0.14); }
+  .sample-switch--examples { align-self: flex-start; }
+  .editor-field input { width: 100%; min-height: 46px; padding: 12px; border: 1px solid var(--grey-20); border-radius: 8px; color: var(--black); background: #f7f9fc; font: 13px/1.5 var(--font-mono); }
+  .editor-field textarea { width: 100%; min-height: 228px; padding: 12px; border: 1px solid var(--grey-20); border-radius: 8px; color: var(--black); background: #f7f9fc; font: 12px/1.65 var(--font-mono); resize: vertical; }
+  .field-hint { margin: 0; color: var(--grey); font-size: 12px; line-height: 1.5; }
+  .scan-button, .action-button { min-height: 38px; padding: 9px 13px; border: 1px solid var(--grey-20); border-radius: 8px; color: var(--black); background: var(--white); cursor: pointer; font-size: 12px; font-weight: 600; }
+  .scan-button { align-self: flex-start; border-color: var(--accent); color: var(--white); background: var(--accent); }
+  .scan-button:disabled { opacity: .65; cursor: progress; }
+  .scan-button:hover, .action-primary:hover { background: var(--accent-strong); }
+  .action-button:disabled { color: #8a98a8; background: #f3f6fa; cursor: not-allowed; }
+  .action-button:focus-visible, .scan-button:focus-visible, .sample-switch button:focus-visible, .editor-field textarea:focus-visible, .editor-field input:focus-visible, .network-field select:focus-visible, .saved-scripts button:focus-visible { outline: 2px solid var(--accent-strong); outline-offset: 2px; }
+  :global(.script-row button:focus-visible) { outline: 2px solid var(--accent-strong); outline-offset: 2px; }
   .tool-result { display: flex; flex-direction: column; align-items: flex-start; }
-  .tool-result .t-eyebrow { margin-bottom: 20px; }
-  .result-number { justify-content: flex-start; align-items: baseline; gap: 9px; margin-bottom: 6px; color: var(--black); font-size: 42px; font-weight: 600; line-height: 1.1; }
-  .result-number span { color: var(--grey); font-size: 16px; font-weight: 500; }
-  .result-period { min-height: 38px; margin-bottom: 22px; color: var(--grey); font-size: 13px; line-height: 1.45; }
-  .result-breakdown { width: 100%; margin: 0 0 16px; border-top: 1px solid var(--grey-20); }
-  .result-breakdown div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--grey-20); }
-  .result-breakdown dt, .result-breakdown dd { margin: 0; font-size: 12px; }
-  .result-breakdown dt { color: var(--grey); }
-  .result-breakdown dd { color: var(--black); font-weight: 600; text-align: right; }
-  .deposit-status { margin: 0 0 12px; padding: 9px 11px; border-radius: 8px; color: var(--accent-strong); background: var(--accent-soft); font-size: 12px; line-height: 1.4; }
-  .deposit-status[data-state="low"], .deposit-status[data-state="occupied-only"] { color: #87333a; background: #fff0f0; }
+  .result-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .result-state { padding: 5px 8px; border: 1px solid var(--grey-20); border-radius: 999px; color: var(--grey); font-size: 10px; white-space: nowrap; }
+  .result-state[data-state="ready"] { color: #187244; border-color: #b8dfc8; background: #effaf3; }
+  .result-state[data-state="warning"] { color: #805222; border-color: #f0d7ae; background: #fff8eb; }
+  .result-state[data-state="error"] { color: #87333a; border-color: #efc2c2; background: #fff0f0; }
+  .tool-result .t-eyebrow { margin: 0; color: var(--accent-strong); }
+  .result-title { margin: 14px 0 8px; color: var(--black); font-size: 25px; font-weight: 600; line-height: 1.2; }
+  .result-period { min-height: 34px; margin-bottom: 14px; color: var(--grey); font-size: 13px; line-height: 1.45; }
+  .result-breakdown { width: 100%; margin: 0 0 14px; border-top: 1px solid var(--grey-20); }
+  .result-breakdown :global(div) { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--grey-20); }
+  .result-breakdown :global(dt), .result-breakdown :global(dd) { margin: 0; font-size: 11px; line-height: 1.4; }
+  .result-breakdown :global(dt) { flex: 0 0 112px; color: var(--grey); }
+  .result-breakdown :global(dd) { min-width: 0; color: var(--black); font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+  .result-breakdown :global(dd code) { font: 11px/1.5 var(--font-mono); overflow-wrap: anywhere; }
+  .check-status { width: 100%; margin: 0 0 10px; padding: 8px 10px; border-radius: 8px; color: var(--accent-strong); background: var(--accent-soft); font-size: 11px; line-height: 1.4; }
+  .check-status[data-state="review"] { color: #805222; background: #fff5e9; }
+  .check-status[data-state="error"] { color: #87333a; background: #fff0f0; }
+  .result-evidence, .result-scripts { width: 100%; margin: 5px 0 12px; padding-top: 12px; border-top: 1px solid var(--grey-20); }
+  :global(.result-section-title) { margin-bottom: 8px; color: var(--black); font-size: 12px; font-weight: 650; }
+  :global(.evidence-row) { display: grid; grid-template-columns: minmax(82px, 0.65fr) minmax(0, 1fr); align-items: start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--grey-20); }
+  :global(.script-row) { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--grey-20); }
+  :global(.evidence-row span), :global(.script-row span) { color: var(--grey); font-size: 10px; }
+  :global(.evidence-row code), :global(.evidence-row a), :global(.script-row code) { min-width: 0; color: var(--black); font: 10px/1.4 var(--font-mono); overflow-wrap: anywhere; text-align: right; }
+  :global(.script-row > div) { min-width: 0; }
+  :global(.script-row button) { flex: none; color: var(--accent-strong); font-size: 10px; text-decoration: underline; text-underline-offset: 3px; }
+  :global(.evidence-link) { color: var(--accent-strong); font-size: 10px; text-decoration: underline; }
+  :global(.history-list) { display: grid; gap: 8px; margin-top: 10px; }
+  :global(.history-item) { padding: 9px; border: 1px solid var(--grey-20); border-radius: 7px; background: #f9fbfd; }
+  :global(.history-item strong) { display: block; margin-bottom: 5px; color: var(--black); font-size: 10px; }
+  :global(.history-item a) { display: block; margin-top: 4px; color: var(--accent-strong); font: 10px/1.4 var(--font-mono); overflow-wrap: anywhere; }
+  :global(.history-item code) { display: block; margin-top: 4px; color: var(--grey); font: 10px/1.4 var(--font-mono); overflow-wrap: anywhere; }
+  .provider-note { margin: -6px 0 0; color: var(--grey); font-size: 10px; }
+  .saved-scripts { width: 100%; margin-top: 18px; border-top: 1px solid var(--grey-20); }
+  .saved-heading { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0 8px; }
+  .saved-heading h3 { font-size: 13px; font-weight: 650; }
+  .saved-heading span { color: var(--grey); font-size: 11px; }
+  .saved-scripts ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .saved-scripts :global(li) { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid var(--grey-20); }
+  .saved-scripts :global(li code) { min-width: 0; overflow: hidden; color: var(--dark-grey); font: 10px var(--font-mono); text-overflow: ellipsis; white-space: nowrap; }
+  .saved-scripts :global(li button) { flex: none; color: var(--accent-strong); font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+  #save-script { margin-top: 4px; }
+  .action-primary { border-color: var(--accent); color: var(--white); background: var(--accent); }
   .stats { width: 100%; display: flex; align-items: stretch; gap: 12px; padding: 16px 0 0; }
   .stat { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 24px; border-radius: 16px; background: var(--surface); overflow: clip; }
   .stat .t-eyebrow { font-size: 12px; }
@@ -153,16 +171,19 @@ const { hero } = home;
     .hero-title, .side { width: 100%; }
     .side { max-width: 520px; }
     .product { min-height: 520px; padding: 28px; }
-    .dao-tool { width: 100%; }
+    .script-tool { width: 100%; }
   }
   @media (max-width: 809.98px) {
     .hero { padding: 48px 20px 64px; gap: 32px; }
     .hero-top { gap: 20px; }
     .product { min-height: auto; padding: 16px; }
-    .dao-tool { grid-template-columns: 1fr; gap: 10px; }
-    .tool-inputs, .tool-result { padding: 20px; }
-    .tool-inputs { gap: 16px; }
-    .result-number { font-size: 36px; }
+    .script-tool { grid-template-columns: 1fr; gap: 10px; }
+    .tool-inputs, .tool-result { padding: 18px; }
+    .tool-inputs { gap: 14px; }
+    .mode-row { align-items: flex-start; flex-direction: column; }
+    .network-field { align-self: flex-end; }
+    .editor-field textarea { min-height: 184px; }
+    .result-title { font-size: 25px; }
     .stats { flex-direction: column; gap: 10px; }
     .stat { width: 100%; flex: none; padding: 18px 20px; }
   }
