@@ -1,8 +1,9 @@
 ---
 import home from '../../content/pages/home.json';
+import WorkflowVisual from './WorkflowVisual.astro';
 const { how } = home;
 ---
-<section class="how" id="withdrawal" data-fx="step-scroll">
+<section class="how" id="workflow" data-fx="step-scroll">
   <div class="how-stage">
     <div class="how-title">
       <p class="t-eyebrow">{how.eyebrow}</p>
@@ -12,60 +13,65 @@ const { how } = home;
     <div class="box no-phone">
       <div class="slides">
         {how.steps.map((s, i) => (
-          <div class="how-card slide" data-step={i} style={i ? 'opacity:0' : undefined}>
-            <img class="img" src={s.image} alt={s.imageAlt} width="1000" height="1000" loading="lazy" />
+          <article class="how-card slide" data-step={i} style={i ? 'opacity:0' : undefined}>
+            <WorkflowVisual step={i} />
             <div class="how-body"><h3 class="t-h4">{s.title}</h3><p class="t-body-m how-desc">{s.description}</p></div>
-          </div>
+          </article>
         ))}
       </div>
       <ol class="numbers" aria-hidden="true">
-        {how.steps.map((_, i) => (
+        {how.steps.map((s, i) => (
           <li class="how-num">
-            <span class="t-h4 idle">{i + 1}</span>
-            <span class="t-h4 active" data-step={i} style={i ? 'opacity:0' : undefined}>{i + 1}</span>
+            <span class="step-number idle">{String(i + 1).padStart(2, '0')}</span>
+            <span class="step-number active" data-step={i} style={i ? 'opacity:0' : undefined}>{String(i + 1).padStart(2, '0')}</span>
+            <span class="step-name">{s.title}</span>
           </li>
         ))}
       </ol>
     </div>
     <div class="stacked phone-only">
-      {how.steps.map((s) => (
-        <div class="stacked-card">
+      {how.steps.map((s, i) => (
+        <article class="stacked-card">
           <div class="how-card">
-            <img class="img" src={s.image} alt={s.imageAlt} width="1000" height="1000" loading="lazy" />
+            <WorkflowVisual step={i} />
             <div class="how-body"><h3 class="t-h4">{s.title}</h3><p class="t-body-m how-desc">{s.description}</p></div>
           </div>
-        </div>
+        </article>
       ))}
     </div>
   </div>
 </section>
 <style>
-  .how { width: 100%; max-width: var(--canvas); margin: 0 auto; height: 2900px; background: var(--page); display: flex; flex-direction: column; align-items: center; }
-  .how-stage { position: sticky; top: 0; width: 100%; height: 725px; padding: 100px 20px 60px; display: flex; align-items: flex-start; gap: 56px; }
-  .how-title { width: 420px; flex: none; display: flex; flex-direction: column; gap: 24px; }
-  .box { flex: 1 1 0; min-width: 0; display: flex; justify-content: space-between; align-items: flex-start; padding: 32px; border-radius: 16px; background: var(--surface); overflow: clip; }
-  .slides { position: relative; width: 440px; height: 501px; flex: none; }
-  .slide { position: absolute; inset: 0 auto auto 0; will-change: transform, opacity; }
-  .how-card { width: 440px; display: flex; flex-direction: column; gap: 20px; }
-  .img { width: 100%; aspect-ratio: 1.11; height: auto; object-fit: cover; border-radius: 16px; }
-  .how-body { display: flex; flex-direction: column; gap: 20px; }
-  .how-desc { color: var(--dark-grey); }
-  .numbers { list-style: none; width: 28px; height: 152px; display: flex; flex-direction: column; gap: 16px; }
-  .how-num { position: relative; width: 28px; height: 26px; }
-  .how-num > span { position: absolute; inset: 0; }
-  .idle { color: var(--grey); }
-  .active { color: var(--accent); }
+  .how { width: 100%; max-width: var(--canvas); height: 2900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; background: var(--page); }
+  .how-stage { position: sticky; top: 0; width: 100%; height: 725px; padding: 82px 20px 60px; display: grid; grid-template-columns: minmax(300px, 0.65fr) minmax(0, 1.35fr); align-items: center; gap: 48px; }
+  .how-title { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 22px; }
+  .how-title .t-body-m { max-width: 52ch; }
+  .box { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) 132px; align-items: center; gap: 18px; overflow: clip; }
+  .slides { position: relative; width: 100%; height: 520px; min-width: 0; }
+  .slide { position: absolute; inset: 0 auto auto 0; width: 100%; will-change: transform, opacity; }
+  .how-card { width: 100%; display: flex; flex-direction: column; gap: 19px; }
+  .how-body { display: flex; flex-direction: column; gap: 10px; }
+  .how-desc { max-width: 62ch; color: var(--dark-grey); }
+  .numbers { width: 132px; height: auto; display: grid; gap: 18px; list-style: none; }
+  .how-num { position: relative; min-height: 34px; display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: center; gap: 11px; }
+  .step-number { grid-column: 1; grid-row: 1; font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .idle { color: #8c9bae; }
+  .active { color: var(--accent-strong); }
+  .how-num .active { position: absolute; top: 50%; left: 0; transform: translateY(-50%); }
+  .step-name { grid-column: 2; color: var(--grey); font-size: 13px; line-height: 1.35; }
 
   @media (max-width: 1199.98px) {
-    .how-stage { height: 1000px; flex-direction: column; gap: 32px; }
-    .how-title { width: 100%; }
-    .box { width: 100%; flex: none; }
+    .how-stage { height: 1000px; grid-template-columns: 1fr; align-content: center; gap: 32px; }
+    .how-title { max-width: 740px; }
+    .box { grid-template-columns: minmax(0, 1fr) 145px; }
   }
   @media (max-width: 809.98px) {
     .how { height: auto; }
-    .how-stage { position: relative; height: auto; padding: 64px 20px; }
-    .stacked { width: 100%; display: flex; flex-direction: column; gap: 20px; }
-    .stacked-card { padding: 20px; border-radius: 16px; background: var(--surface); overflow: clip; }
+    .how-stage { position: relative; height: auto; padding: 64px 20px 76px; display: flex; flex-direction: column; align-items: stretch; gap: 36px; }
+    .how-title { max-width: 100%; gap: 16px; }
+    .stacked { width: 100%; display: flex; flex-direction: column; gap: 42px; }
+    .stacked-card { padding: 0; overflow: visible; }
     .stacked-card .how-card { width: 100%; }
+    .how-card { position: relative; inset: auto; opacity: 1 !important; transform: none !important; }
   }
 </style>
