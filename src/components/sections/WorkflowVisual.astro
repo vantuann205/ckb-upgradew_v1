@@ -1,0 +1,193 @@
+---
+interface Props { step: number }
+const { step } = Astro.props;
+const view = ['scan', 'classify', 'diff', 'verify'][step] ?? 'scan';
+---
+<figure class:list={['workflow-simulation', `workflow-simulation--${view}`]} aria-hidden="true">
+  <div class="workflow-topbar">
+    <span class="workflow-brand"><img src="/shelter-mark.svg" alt="" width="20" height="20" />CKB Upgrade Watch</span>
+    <span class="workflow-concept">MVP preview</span>
+  </div>
+
+  {step === 0 && (
+    <div class="scan-scene">
+      <div class="scan-path"><span>script / reference</span><span class="file-type">JSON</span></div>
+      <div class="scan-main">
+        <div class="scan-editor">
+          <div class="code-line"><span class="line-number">01</span><code>"code_hash": "0x…"</code></div>
+          <div class="code-line code-line--match"><span class="line-number">02</span><code>"hash_type": <span class="legacy-token">"type"</span></code></div>
+          <div class="code-line"><span class="line-number">03</span><code>"args": "0x…"</code></div>
+          <span class="scan-beam"></span>
+        </div>
+        <div class="scan-link"><span></span></div>
+        <aside class="scan-inspector">
+          <span class="inspector-label">Reference</span>
+          <code>type hash</code>
+          <span class="inspector-rule">Code cell lookup</span>
+          <span class="inspector-label">Next check</span>
+          <strong>cell lock</strong>
+        </aside>
+      </div>
+      <div class="scan-result"><span class="scan-light"></span><span>Type reference</span><code>lock check next</code></div>
+    </div>
+  )}
+
+  {step === 1 && (
+    <div class="classify-scene">
+      <div class="classify-row classify-row--direct">
+        <div class="classify-heading"><span class="classify-mark"></span><span>Fixed binary hash</span><code>data / data1 / data2</code></div>
+        <div class="classify-example"><code>script binary hash</code><span class="maps-to">points directly to</span><code>code</code></div>
+      </div>
+      <div class="classify-row classify-row--manual">
+        <div class="classify-heading"><span class="classify-mark"></span><span>Cell-based reference</span><code>type</code></div>
+        <div class="classify-example"><code>Type Script hash</code><span class="maps-to">finds a code cell; inspect its lock</span></div>
+      </div>
+      <p class="classify-note">The reference type alone does not identify who controls the code cell.</p>
+    </div>
+  )}
+
+  {step === 2 && (
+    <div class="diff-scene">
+      <div class="diff-path"><span>script / code cell</span><span>Evidence path</span></div>
+      <div class="diff-code">
+        <div class="diff-line diff-line--context"><span>01</span><code>script hash_type: type</code></div>
+        <div class="diff-line diff-line--remove"><span>?</span><code>resolve matching live code cell</code></div>
+        <div class="diff-line diff-line--add"><span>→</span><code>inspect the cell's lock script</code></div>
+        <div class="diff-line diff-line--context"><span>04</span><code>verify replacement transaction</code></div>
+      </div>
+      <div class="diff-footer"><span>On-chain evidence</span><span>Transaction links</span></div>
+    </div>
+  )}
+
+  {step === 3 && (
+    <div class="verify-scene">
+      <div class="verify-heading"><span>Saved scripts</span><span class="verify-local">This browser</span></div>
+      <div class="verify-row"><span class="verify-index">01</span><div><code>0x… · type</code><span>Script reference saved</span></div><span class="verify-state">Local</span></div>
+      <div class="verify-row"><span class="verify-index">02</span><div><code>chain monitoring</code><span>Not connected yet</span></div><span class="verify-state">Planned</span></div>
+      <div class="verify-footer"><span>No alerts are sent</span><strong>Live updates need chain data and holder validation</strong></div>
+    </div>
+  )}
+</figure>
+<style>
+  .workflow-simulation {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-rows: 46px minmax(0, 1fr);
+    width: 100%;
+    min-height: 320px;
+    max-height: 470px;
+    aspect-ratio: 1.34;
+    overflow: hidden;
+    border: 1px solid rgba(35, 77, 128, 0.2);
+    border-radius: 12px;
+    background-color: #f8fbff;
+    background-image:
+      linear-gradient(rgba(85, 132, 184, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(85, 132, 184, 0.055) 1px, transparent 1px);
+    background-size: 28px 28px;
+    box-shadow: 0 28px 58px rgba(31, 71, 121, 0.14), 0 2px 8px rgba(37, 91, 145, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  }
+  .workflow-simulation::after { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(128deg, rgba(228, 239, 255, 0.72), rgba(248, 251, 255, 0.18) 58%, rgba(221, 237, 229, 0.4)); pointer-events: none; }
+  .workflow-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; border-bottom: 1px solid rgba(35, 77, 128, 0.15); background: rgba(255, 255, 255, 0.76); }
+  .workflow-brand { display: flex; align-items: center; gap: 8px; color: var(--black); font-size: 12px; font-weight: 650; }
+  .workflow-brand img { width: 20px; height: 20px; }
+  .workflow-concept { padding: 5px 8px; border: 1px solid rgba(33, 102, 197, 0.2); border-radius: 5px; color: var(--accent-strong); background: rgba(228, 239, 255, 0.76); font-family: var(--font-mono); font-size: 10px; line-height: 1; }
+  .scan-scene, .classify-scene, .diff-scene, .verify-scene { position: relative; min-height: 0; padding: 18px 20px; }
+  .scan-scene { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 13px; }
+  .scan-path, .diff-path { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--grey); font-family: var(--font-mono); font-size: 11px; }
+  .scan-path > span:first-child, .diff-path > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-type { flex: none; color: var(--accent-strong); }
+  .scan-main { display: grid; grid-template-columns: minmax(0, 1fr) 22px 132px; align-items: stretch; gap: 10px; min-height: 0; }
+  .scan-editor { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; padding: 12px 11px; overflow: hidden; border: 1px solid rgba(88, 138, 190, 0.18); border-left: 2px solid rgba(33, 102, 197, 0.38); border-radius: 5px; background: rgba(255, 255, 255, 0.76); box-shadow: 0 14px 28px rgba(38, 77, 119, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.96); backdrop-filter: blur(8px); }
+  .code-line { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: center; gap: 7px; min-width: 0; color: #38536f; font-family: var(--font-mono); font-size: 10px; line-height: 1.6; }
+  .code-line code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .line-number { color: #93a3b5; font-variant-numeric: tabular-nums; }
+  .code-line--match { position: relative; margin: 0 -11px; padding: 4px 11px; background: linear-gradient(100deg, rgba(221, 237, 255, 0.95), rgba(228, 239, 255, 0.7) 72%, rgba(220, 247, 237, 0.45)); box-shadow: inset 0 1px rgba(255, 255, 255, 0.9), inset 0 -1px rgba(67, 136, 207, 0.14); }
+  .legacy-token { padding: 2px 4px; border-bottom: 1px solid #c87938; border-radius: 3px; color: #8b4d18; background: rgba(255, 241, 232, 0.9); }
+  .scan-beam { position: absolute; top: 2px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #5bb5ff 18%, #9ee8ef 52%, #5bb5ff 82%, transparent); box-shadow: 0 0 16px 3px rgba(33, 135, 218, 0.28), 0 0 3px rgba(255, 255, 255, 0.95); animation: scan-sweep 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+  .scan-link { position: relative; align-self: center; width: 100%; height: 1px; background: linear-gradient(90deg, rgba(33, 102, 197, 0.08), rgba(33, 102, 197, 0.4), rgba(23, 108, 73, 0.2)); }
+  .scan-link::after { position: absolute; inset: -4px 2px; border-top: 1px solid rgba(97, 171, 222, 0.18); content: ""; }
+  .scan-link span { position: absolute; z-index: 1; top: -3px; left: 0; width: 7px; height: 7px; border: 1px solid rgba(255, 255, 255, 0.92); border-radius: 2px; background: #3989db; box-shadow: 0 0 0 2px rgba(57, 137, 219, 0.12), 0 0 12px 3px rgba(33, 102, 197, 0.42); animation: scan-transfer 1.8s ease-in-out infinite; }
+  .scan-inspector { display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; padding: 12px 10px; border: 1px solid rgba(88, 138, 190, 0.2); border-radius: 5px; background: rgba(255, 255, 255, 0.62); box-shadow: 0 12px 24px rgba(38, 77, 119, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.94); backdrop-filter: blur(8px); }
+  .inspector-label { color: var(--grey); font-size: 9px; }
+  .scan-inspector > code { overflow-wrap: anywhere; color: #8b4d18; font-family: var(--font-mono); font-size: 10px; }
+  .inspector-rule { padding-bottom: 8px; border-bottom: 1px solid rgba(35, 77, 128, 0.12); color: #8292a5; font-size: 9px; }
+  .scan-inspector > strong { overflow-wrap: anywhere; color: #176c49; font-family: var(--font-mono); font-size: 10px; font-weight: 600; }
+  .scan-result { display: flex; align-items: center; gap: 9px; color: var(--dark-grey); font-size: 12px; }
+  .scan-result code { margin-left: auto; color: var(--grey); font-family: var(--font-mono); font-size: 10px; }
+  .scan-light, .classify-mark { width: 7px; height: 7px; flex: none; border-radius: 2px; background: #c87938; }
+  .scan-light { animation: signal-pulse 2.8s ease-in-out infinite; }
+
+  .classify-scene { display: flex; flex-direction: column; justify-content: center; gap: 13px; }
+  .classify-row { min-width: 0; padding: 13px 15px; border: 1px solid rgba(81, 127, 172, 0.15); border-left: 2px solid; border-radius: 5px; background: rgba(255, 255, 255, 0.68); box-shadow: 0 12px 24px rgba(38, 77, 119, 0.055), inset 0 1px 0 rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); }
+  .classify-row--direct { border-left-color: #176c49; background-image: linear-gradient(100deg, rgba(222, 246, 235, 0.72), rgba(255, 255, 255, 0.72) 56%); }
+  .classify-row--manual { border-left-color: #c87938; background-image: linear-gradient(100deg, rgba(255, 239, 224, 0.66), rgba(255, 255, 255, 0.72) 56%); }
+  .classify-heading { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--black); font-size: 12px; font-weight: 600; }
+  .classify-heading code { margin-left: auto; color: var(--grey); font-family: var(--font-mono); font-size: 9px; font-weight: 400; }
+  .classify-row--direct .classify-mark { background: #176c49; box-shadow: 0 0 0 3px rgba(23, 108, 73, 0.1), 0 0 10px rgba(23, 108, 73, 0.34); }
+  .classify-row--manual .classify-mark { box-shadow: 0 0 0 3px rgba(200, 121, 56, 0.1), 0 0 10px rgba(200, 121, 56, 0.28); }
+  .classify-example { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-top: 10px; color: var(--grey); font-family: var(--font-mono); font-size: 11px; }
+  .classify-example code { color: var(--black); }
+  .classify-row--direct .classify-example code:last-child { color: #176c49; }
+  .maps-to { color: var(--grey); font-family: var(--font); font-size: 10px; }
+  .classify-row--manual .classify-example code:first-child { color: #8b4d18; }
+  .classify-note { padding: 2px 0 0 10px; color: var(--grey); font-size: 11px; line-height: 1.45; }
+
+  .diff-scene { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px; }
+  .diff-path > span:last-child { flex: none; color: var(--accent-strong); font-family: var(--font); font-size: 11px; }
+  .diff-code { display: flex; flex-direction: column; justify-content: center; gap: 5px; min-width: 0; padding: 12px 0; border: 1px solid rgba(88, 138, 190, 0.16); border-radius: 5px; background: rgba(255, 255, 255, 0.62); box-shadow: 0 12px 26px rgba(38, 77, 119, 0.055), inset 0 1px 0 rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); }
+  .diff-line { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: center; gap: 8px; min-width: 0; padding: 7px 10px; color: #38536f; font-family: var(--font-mono); font-size: 11px; line-height: 1.5; }
+  .diff-line > span { color: #7e91a7; text-align: center; }
+  .diff-line code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .diff-line--remove { color: #a13e4b; background: linear-gradient(100deg, rgba(255, 225, 228, 0.72), rgba(198, 76, 87, 0.045)); }
+  .diff-line--add { color: #176c49; background-color: rgba(23, 108, 73, 0.075); background-image: linear-gradient(110deg, transparent 30%, rgba(163, 237, 196, 0.48) 50%, transparent 70%); background-size: 220% 100%; box-shadow: inset 2px 0 rgba(23, 108, 73, 0.58), 0 0 22px rgba(23, 108, 73, 0.1); animation: diff-arrive 520ms var(--ease-out) both, diff-gleam 4.8s ease-in-out 0.7s infinite; }
+  .diff-line--remove > span { color: #c64c57; }
+  .diff-line--add > span { color: #176c49; }
+  .diff-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 9px; border-top: 1px solid rgba(35, 77, 128, 0.14); color: var(--grey); font-size: 10px; }
+  .diff-footer span:last-child { color: var(--accent-strong); }
+
+  .verify-scene { display: flex; flex-direction: column; justify-content: center; }
+  .verify-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 13px; color: var(--black); font-size: 13px; font-weight: 600; }
+  .verify-local { color: #8b4d18; font-family: var(--font-mono); font-size: 10px; font-weight: 400; }
+  .verify-row { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 11px; min-width: 0; padding: 13px 10px; border-top: 1px solid rgba(35, 77, 128, 0.13); background: linear-gradient(105deg, rgba(225, 239, 255, 0.5), rgba(255, 255, 255, 0.22) 72%); }
+  .verify-index { color: var(--accent-strong); font-family: var(--font-mono); font-size: 11px; font-variant-numeric: tabular-nums; text-shadow: 0 0 12px rgba(33, 102, 197, 0.25); }
+  .verify-row > div { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+  .verify-row code { overflow: hidden; color: var(--black); font-family: var(--font-mono); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+  .verify-row > div span { color: var(--grey); font-size: 10px; }
+  .verify-state { padding: 4px 7px; border: 1px solid rgba(33, 102, 197, 0.15); border-radius: 4px; color: var(--accent-strong); background: rgba(233, 242, 255, 0.55); font-size: 10px; white-space: nowrap; }
+  .verify-footer { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; padding: 12px 0 0 43px; border-top: 1px solid rgba(35, 77, 128, 0.14); color: var(--grey); font-size: 10px; }
+  .verify-footer strong { color: var(--black); font-size: 11px; font-weight: 550; }
+
+  @keyframes scan-sweep { 0% { top: 2px; opacity: 0; } 12% { opacity: 0.9; } 88% { opacity: 0.65; } 100% { top: calc(100% - 4px); opacity: 0; } }
+  @keyframes scan-transfer { 0% { transform: translateX(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(15px); opacity: 0; } }
+  @keyframes signal-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(200, 121, 56, 0.22); } 50% { box-shadow: 0 0 0 5px rgba(200, 121, 56, 0.12); } }
+  @keyframes diff-arrive { from { opacity: 0.42; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes diff-gleam { 0%, 22% { background-position: 120% 0; } 72%, 100% { background-position: -120% 0; } }
+  @media (max-width: 809.98px) {
+    .workflow-simulation { min-height: 270px; max-height: none; aspect-ratio: 1.28; grid-template-rows: 42px minmax(0, 1fr); border-radius: 10px; }
+    .workflow-topbar { padding: 0 13px; }
+    .scan-scene, .classify-scene, .diff-scene, .verify-scene { padding: 14px 14px; }
+    .scan-main { grid-template-columns: minmax(0, 1fr) 15px 108px; gap: 7px; }
+    .scan-editor { padding-inline: 9px; }
+    .code-line { grid-template-columns: 20px minmax(0, 1fr); gap: 5px; font-size: 9px; }
+    .code-line--match { margin-inline: -9px; padding-inline: 9px; }
+    .scan-inspector { padding-inline: 8px; }
+    .scan-inspector > code, .scan-inspector > strong { font-size: 9px; }
+    .classify-row { padding: 11px 12px; }
+    .classify-example { font-size: 10px; }
+    .diff-line { grid-template-columns: 21px minmax(0, 1fr); gap: 6px; padding-inline: 7px; font-size: 10px; }
+    .verify-row { grid-template-columns: 26px minmax(0, 1fr) auto; gap: 8px; }
+    .verify-state { padding: 4px 5px; font-size: 9px; }
+  }
+  @media (max-width: 360px) {
+    .workflow-concept { font-size: 9px; }
+    .classify-heading { font-size: 11px; }
+    .classify-heading code { font-size: 8px; }
+    .verify-row { grid-template-columns: 22px minmax(0, 1fr); }
+    .verify-state { grid-column: 2; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scan-beam, .scan-link span, .scan-light, .diff-line--add { animation: none; }
+  }
+</style>
