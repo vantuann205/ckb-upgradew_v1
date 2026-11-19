@@ -1,61 +1,60 @@
 ---
-const title = 'Inspect the model behind each number';
 ---
-<section class="model-section" id="model-notes">
+<section class="model-section" id="script-rules">
   <div class="model-title">
-    <p class="t-eyebrow">Calculation notes</p>
-    <h2 class="t-h2 balance">{title}</h2>
-    <p class="t-body-m">The live DAO uses accumulated-rate values. This prototype makes its simplified assumptions editable and visible.</p>
+    <p class="t-eyebrow">How to read a result</p>
+    <h2 class="t-h2 balance">One field answers one part of the question</h2>
+    <p class="t-body-m">The Script tells you how code is referenced. The live cell lock authorizes spending; its Type Script also constrains what can replace it.</p>
   </div>
   <div class="model-grid">
     <div class="method-console">
-      <div class="method-tabs" role="tablist" aria-label="Calculation details">
-        <button class="method-tab is-active" id="method-tab-compensation" type="button" role="tab" aria-selected="true" aria-controls="method-panel" tabindex="0" data-method-tab="compensation">CKB increase</button>
-        <button class="method-tab" id="method-tab-capacity" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="capacity">Amount counted</button>
-        <button class="method-tab" id="method-tab-share" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="share">Outside DAO</button>
-        <button class="method-tab" id="method-tab-protocol" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="protocol">DAO calculation</button>
-        <button class="method-tab" id="method-tab-limits" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="limits">Not included</button>
+      <div class="method-tabs" role="tablist" aria-label="Script reference details">
+        <button class="method-tab is-active" id="method-tab-data" type="button" role="tab" aria-selected="true" aria-controls="method-panel" tabindex="0" data-method-tab="data">data / data1 / data2</button>
+        <button class="method-tab" id="method-tab-type" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="type">type</button>
+        <button class="method-tab" id="method-tab-lock" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="lock">Who controls it?</button>
+        <button class="method-tab" id="method-tab-limits" type="button" role="tab" aria-selected="false" aria-controls="method-panel" tabindex="-1" data-method-tab="limits">Limits</button>
       </div>
-      <div class="method-panel" id="method-panel" role="tabpanel" tabindex="0" aria-labelledby="method-tab-compensation">
+      <div class="method-panel" id="method-panel" role="tabpanel" tabindex="0" aria-labelledby="method-tab-data">
         <div class="method-panel-heading">
           <div>
-            <span class="method-language">The model behind the estimate</span>
-            <p id="method-copy">The estimate starts with your balance, removes the 102 CKB cell requirement, then applies the selected rate over time.</p>
+            <span class="method-language">Reference behavior</span>
+            <p id="method-copy">These hash types point directly to a script binary hash. A replacement binary has a different hash, so this reference does not follow it automatically.</p>
           </div>
-          <a href="#sources">View protocol sources</a>
+          <a href="#references">View CKB references</a>
         </div>
         <div class="method-code-actions">
-          <button class="copy-button" id="method-copy-button" type="button">Copy formula</button>
+          <button class="copy-button" id="method-copy-button" type="button">Copy example</button>
           <span class="copy-status" id="method-copy-status" role="status" aria-live="polite"></span>
         </div>
-        <pre><code id="method-code">CKB counted = max(0, balance - 102 CKB)
-Growth over time = (1 + yearly rate / 100) ^ (months / 12)
-Estimated CKB increase = CKB counted * (growth - 1)</code></pre>
+        <pre><code id="method-code">hash_type: "data1"
+code_hash: hash of the script binary
+
+same reference -> same binary hash</code></pre>
       </div>
     </div>
-    <aside class="assumption-list" aria-label="Scenario assumptions">
+    <aside class="assumption-list" aria-label="What a script check can establish">
       <div class="assumption">
-        <span class="assumption-value">102 CKB</span>
+        <span class="assumption-value">Reference</span>
         <div>
-          <h3 class="t-h5">Occupied capacity</h3>
-          <p class="t-body-s">Standard DAO deposit-cell assumption. Fees are additional.</p>
+          <h3 class="t-h5">Read hash_type</h3>
+          <p class="t-body-s">It identifies how the script locates code, not what the code does.</p>
         </div>
       </div>
       <div class="assumption">
-        <span class="assumption-value">0-5%</span>
+        <span class="assumption-value">Lock</span>
         <div>
-          <h3 class="t-h5">Editable annual rate</h3>
-          <p class="t-body-s">A user-selected scenario, not a live network rate or APY.</p>
+          <h3 class="t-h5">Inspect the live code cell</h3>
+          <p class="t-body-s">Its lock authorizes spending; its Type Script validates replacement outputs.</p>
         </div>
       </div>
       <div class="assumption">
-        <span class="assumption-value">1-60</span>
+        <span class="assumption-value">Evidence</span>
         <div>
-          <h3 class="t-h5">Months modeled</h3>
-          <p class="t-body-s">Uses a constant rate and compound growth for comparison.</p>
+          <h3 class="t-h5">Verify each change</h3>
+          <p class="t-body-s">Use the transaction and block that replaced the code cell.</p>
         </div>
       </div>
-      <p class="assumption-limit">Not included: primary issuance, fees, CKB price changes, custom lock scripts, or current accumulated-rate values.</p>
+      <p class="assumption-limit">This MVP queries live CKB data and traces bounded Type ID history. Custom lock logic stays unidentified; no wallet or alerts are connected.</p>
     </aside>
   </div>
 </section>
@@ -84,7 +83,7 @@ Estimated CKB increase = CKB counted * (growth - 1)</code></pre>
   .copy-button:active { transform: translateY(1px); }
   .copy-status { color: var(--grey); font-size: 12px; }
   .method-panel pre { position: relative; max-width: 100%; margin: 0; padding: 48px 22px 22px; overflow-x: auto; border: 1px solid rgba(35, 77, 128, 0.14); border-left: 3px solid var(--accent); border-radius: 8px; color: var(--black); background: #f1f6fc; font: 13px/1.9 var(--font-mono); font-variant-numeric: tabular-nums; }
-  .method-panel pre::before { position: absolute; top: 15px; left: 22px; color: var(--accent-strong); content: "SCENARIO EQUATION"; font: 10px/1.2 var(--font-mono); }
+  .method-panel pre::before { position: absolute; top: 15px; left: 22px; color: var(--accent-strong); content: "DOCUMENTED REPLACEMENT"; font: 10px/1.2 var(--font-mono); }
   .method-panel code { white-space: pre-wrap; overflow-wrap: anywhere; }
   .assumption-list { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
   .assumption { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: 18px; min-height: 100px; padding: 18px 20px; border: 1px solid var(--grey-20); border-radius: 12px; background: var(--surface); }
