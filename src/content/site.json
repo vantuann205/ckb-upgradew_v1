@@ -1,57 +1,45 @@
 {
-  "brand": "CKB DAO Shelter",
+  "brand": "CKB Upgrade Watch",
   "nav": {
     "links": [
-      { "href": "#estimate", "label": "Estimator" },
-      { "href": "#withdrawal", "label": "Withdrawal" },
-      { "href": "#full-version", "label": "Roadmap" },
-      { "href": "#model-notes", "label": "Model notes" },
-      { "href": "#sources", "label": "Sources" }
+      { "href": "#demo", "label": "Check script" },
+      { "href": "#what-changes", "label": "What it checks" },
+      { "href": "#workflow", "label": "How it works" },
+      { "href": "#scope", "label": "MVP scope" },
+      { "href": "#references", "label": "References" }
     ],
-    "login": { "href": "#sources", "label": "Read the RFC" },
-    "demo": { "href": "#estimate", "label": "Run a scenario" }
+    "login": { "href": "https://docs.nervos.org/docs/tech-explanation/data-type-diff", "label": "CKB script docs" },
+    "demo": { "href": "#demo", "label": "Try the checker" }
   },
   "cta": {
-    "headingMuted": "CKB DAO Shelter ",
-    "heading": "A clearer view before your first deposit.",
-    "description": "Use the local scenario model, then check current protocol details before signing.",
-    "button": { "href": "#estimate", "label": "Run a scenario" },
-    "image": "/assets/site/ckbxdao-particle-source.svg",
-    "mobileImage": "/assets/site/ckbxdao-particle-source-mobile.svg",
-    "imageAlt": "The CKB DAO Shelter wordmark formed by blue particles"
+    "headingMuted": "CKB Upgrade Watch ",
+    "heading": "Know what your script depends on.",
+    "description": "Inspect live Type ID references and the chain evidence behind their current code cells.",
+    "button": { "href": "#demo", "label": "Check a script" },
+    "image": "/assets/site/ckb-upgrade-watch-particle-source.svg",
+    "mobileImage": "/assets/site/ckb-upgrade-watch-particle-source-mobile.svg",
+    "imageAlt": "The CKB Upgrade Watch wordmark paired with its CKB emblem"
   },
   "footer": {
     "columns": [
       {
         "label": "Explore",
         "links": [
-          { "href": "#estimate", "label": "Scenario estimator" },
-          { "href": "#withdrawal", "label": "Withdrawal path" },
-          { "href": "#model-notes", "label": "Model notes" }
+          { "href": "#demo", "label": "Script checker" },
+          { "href": "#workflow", "label": "How it works" },
+          { "href": "#scope", "label": "MVP scope" }
         ]
       },
       {
-        "label": "Protocol",
+        "label": "CKB references",
         "links": [
-          {
-            "href": "https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md",
-            "label": "RFC 0023",
-            "external": true
-          },
-          {
-            "href": "https://docs.nervos.org/docs/basics/concepts/economics/",
-            "label": "Nervos economics",
-            "external": true
-          },
-          {
-            "href": "https://docs.nervos.org/docs/script/dao/",
-            "label": "DAO script",
-            "external": true
-          }
+          { "href": "https://docs.nervos.org/docs/tech-explanation/data-type-diff", "label": "Data hash vs. type hash", "external": true },
+          { "href": "https://docs.nervos.org/docs/script/script-upgrade-workflow", "label": "Script upgrade workflow", "external": true },
+          { "href": "https://github.com/gpBlockchain/ckb-contract-flow-html", "label": "CKB Contract Flow", "external": true }
         ]
       }
     ],
-    "copyright": "© 2026 CKB DAO Shelter.",
-    "note": "Illustrative scenario only. No wallet or live chain data."
+    "copyright": "© 2026 CKB Upgrade Watch.",
+    "note": "Read-only chain lookup. No wallet signing, background monitoring, or alerts."
   }
 }
