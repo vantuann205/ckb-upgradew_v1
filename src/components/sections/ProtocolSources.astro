@@ -3,7 +3,7 @@ import home from '../../content/pages/home.json';
 import Button from '../ui/Button.astro';
 const { sources } = home;
 ---
-<section class="protocol-sources" id="sources">
+<section class="protocol-sources" id="references">
   <div class="sources-title">
     <p class="t-eyebrow">{sources.eyebrow}</p>
     <h2 class="t-h2 balance">{sources.title}</h2>
@@ -15,7 +15,7 @@ const { sources } = home;
         <img class="source-cover" src={item.image} alt={item.imageAlt} width="1000" height="681" loading="lazy" decoding="async" />
         <div class="source-panel" data-panel>
           <div class="source-copy" data-copy>
-            <p class="source-label">NERVOS DOCUMENTATION</p>
+            <p class="source-label">CKB DOCUMENTATION / OPEN SOURCE</p>
             <h3 class="t-h4 source-heading">{item.title}</h3>
             <p class="t-body-m source-description">{item.description}</p>
             <span class="source-link-label">Open reference</span>
