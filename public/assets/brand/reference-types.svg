@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 681" fill="none">
+  <rect width="1000" height="681" fill="#E7F1FB"/>
+  <path d="M0 113H1000M0 226H1000M0 339H1000M0 452H1000M0 565H1000M125 0V681M250 0V681M375 0V681M500 0V681M625 0V681M750 0V681M875 0V681" stroke="#AFC7DF" stroke-opacity=".28"/>
+  <rect x="90" y="130" width="820" height="424" rx="14" fill="#F8FBFF" stroke="#91AEC9" stroke-width="2"/>
+  <text x="126" y="183" fill="#536C86" font-family="monospace" font-size="19">CKB SCRIPT REFERENCE</text>
+  <rect x="126" y="214" width="324" height="284" rx="9" fill="#E9F2FC" stroke="#91AEC9"/>
+  <text x="156" y="258" fill="#2166C5" font-family="monospace" font-size="20">data1</text>
+  <text x="156" y="299" fill="#405873" font-family="sans-serif" font-size="20">code hash points to</text>
+  <text x="156" y="329" fill="#405873" font-family="sans-serif" font-size="20">the binary itself</text>
+  <path d="M159 382H416" stroke="#7E9AB6" stroke-width="2"/>
+  <rect x="157" y="409" width="116" height="49" rx="6" fill="#D5E9F8"/>
+  <text x="175" y="440" fill="#24496E" font-family="monospace" font-size="16">fixed code</text>
+  <rect x="550" y="214" width="324" height="284" rx="9" fill="#FDF6EC" stroke="#D0A873"/>
+  <text x="580" y="258" fill="#A66627" font-family="monospace" font-size="20">type</text>
+  <text x="580" y="299" fill="#405873" font-family="sans-serif" font-size="20">code hash points to</text>
+  <text x="580" y="329" fill="#405873" font-family="sans-serif" font-size="20">a code cell's type</text>
+  <path d="M583 382H840" stroke="#C6A478" stroke-width="2"/>
+  <rect x="581" y="409" width="228" height="49" rx="6" fill="#F5E4CC"/>
+  <text x="599" y="440" fill="#86531F" font-family="monospace" font-size="16">check cell lock</text>
+</svg>
