@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 681" fill="none">
+  <rect width="1000" height="681" fill="#E8F1FA"/>
+  <path d="M0 113H1000M0 226H1000M0 339H1000M0 452H1000M0 565H1000M125 0V681M250 0V681M375 0V681M500 0V681M625 0V681M750 0V681M875 0V681" stroke="#AFC7DF" stroke-opacity=".28"/>
+  <rect x="102" y="96" width="796" height="488" rx="14" fill="#F8FBFF" stroke="#91AEC9" stroke-width="2"/>
+  <text x="143" y="151" fill="#536C86" font-family="monospace" font-size="19">YOUR WATCHLIST</text>
+  <text x="743" y="151" fill="#72869B" font-family="sans-serif" font-size="15">local preview</text>
+  <path d="M142 184H858" stroke="#CAD8E5" stroke-width="2"/>
+  <g>
+    <rect x="142" y="213" width="716" height="82" rx="7" fill="#EDF4FB"/>
+    <rect x="162" y="235" width="38" height="38" rx="6" fill="#D2E5F5"/>
+    <path d="M174 254h14M181 247v14" stroke="#2166C5" stroke-width="2"/>
+    <text x="222" y="245" fill="#405873" font-family="sans-serif" font-size="17">Script saved</text>
+    <text x="222" y="271" fill="#72869B" font-family="monospace" font-size="13">0x… · type reference</text>
+    <text x="751" y="260" fill="#A66627" font-family="sans-serif" font-size="14">alerts off</text>
+  </g>
+  <g>
+    <rect x="142" y="317" width="716" height="82" rx="7" fill="#EDF4FB"/>
+    <rect x="162" y="339" width="38" height="38" rx="6" fill="#D2E5F5"/>
+    <path d="M174 358h14M181 351v14" stroke="#2166C5" stroke-width="2"/>
+    <text x="222" y="349" fill="#405873" font-family="sans-serif" font-size="17">Script saved</text>
+    <text x="222" y="375" fill="#72869B" font-family="monospace" font-size="13">0x… · fixed binary reference</text>
+    <text x="751" y="364" fill="#72869B" font-family="sans-serif" font-size="14">saved locally</text>
+  </g>
+  <rect x="142" y="447" width="716" height="86" rx="7" fill="#FBF2E7" stroke="#D5B081"/>
+  <text x="166" y="482" fill="#805222" font-family="sans-serif" font-size="16">Saved scripts are not monitored yet.</text>
+  <text x="166" y="509" fill="#94795B" font-family="sans-serif" font-size="14">No chain alerts are sent by this prototype.</text>
+</svg>
