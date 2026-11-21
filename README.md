@@ -1,8 +1,12 @@
-# CKB DAO Shelter
+# CKB Upgrade Watch
 
-A runnable prototype for CKB holders to inspect an illustrative Nervos DAO deposit scenario. It estimates compensation and outside-DAO share drift, explains occupied capacity, and presents the two-phase withdrawal path.
+A read-only CKB inspection prototype. Scan an address for live cell capacity and scripts, or paste a Script JSON object to resolve a current Type ID code cell, inspect its lock, and trace a bounded replacement history.
 
-The landing page adapts the layout, motion, and selected visual assets from `agnilem/lapse-astro`. The copied and adapted material remains under its MIT license; see [LICENSE-LAPSE.txt](./LICENSE-LAPSE.txt) and [LICENSES-THIRD-PARTY.txt](./LICENSES-THIRD-PARTY.txt).
+The app queries the selected public CKB RPC and indexer through server API routes. It does not connect to a wallet, sign transactions, calculate token balances, identify real-world owners, monitor in the background, or send alerts. Unrecognized locks and incomplete chain evidence are labeled as unknown or partial. Saved watchlist entries stay in browser local storage. Do not paste secrets.
+
+Lookup bounds: address scans return at most 500 cells, Type ID searches inspect at most 2,000 live Type ID cells, and history follows at most 25 versions or 100 transaction lookups. A capped or ambiguous result is not treated as proof that no match exists.
+
+The landing page retains the prior Lapse-derived composition and existing CKB mark. See [LICENSE-LAPSE.txt](./LICENSE-LAPSE.txt) and [LICENSES-THIRD-PARTY.txt](./LICENSES-THIRD-PARTY.txt) for the retained template licenses.
 
 ## Run locally
 
@@ -13,26 +17,28 @@ npm install
 npm run dev
 ```
 
-Run the model assertions and production build with:
+Run the parser, API fixture checks, and production build:
 
 ```sh
 npm test
 npm run build
 ```
 
-## Model limits
+## References
 
-- The default 2.0% annual issuance scenario is editable input, not a live rate, DAO APY, or market return.
-- The simplified model compounds that constant scenario over the selected duration. The live DAO uses accumulated-rate values recorded on-chain.
-- Outside-DAO share drift is a modeled CKB-equivalent change in proportional supply share. It is not CKB removed from a wallet, a price forecast, or a guaranteed loss.
-- The comparison covers secondary-issuance effects only. It excludes primary issuance, price changes, fees, and custom lock scripts.
-- The 102 CKB occupied capacity is the standard deposit-cell assumption. Transaction fees are additional.
-- 180 epochs is the protocol minimum from the deposit epoch. Calendar time varies with epoch length; withdrawal has a request phase and a completion phase.
+- [CKB: Data hash vs. type hash](https://docs.nervos.org/docs/tech-explanation/data-type-diff)
+- [CKB: Recommended script upgrade workflow](https://docs.nervos.org/docs/script/script-upgrade-workflow)
+- [CKB Contract Flow](https://github.com/gpBlockchain/ckb-contract-flow-html)
 
-No wallet, RPC endpoint, live rate, fee quote, transaction builder, or on-chain action is connected. The CKBxDAO particle field is a brand visual, not network activity.
+## Provider configuration
 
-## Protocol references
+Optional server environment variables:
 
-- [Nervos RFC 0023: DAO deposit and withdrawal](https://github.com/nervosnetwork/rfcs/blob/master/rfcs/0023-dao-deposit-withdraw/0023-dao-deposit-withdraw.md)
-- [Nervos economics and DAO overview](https://docs.nervos.org/docs/basics/concepts/economics/)
-- [Nervos DAO script and cell model](https://docs.nervos.org/docs/script/dao/)
+```text
+CKB_MAINNET_RPC_URL
+CKB_MAINNET_INDEXER_URL
+CKB_TESTNET_RPC_URL
+CKB_TESTNET_INDEXER_URL
+```
+
+Defaults use the public `ckb.dev` endpoints. Deployments should set trusted providers with suitable rate limits.
