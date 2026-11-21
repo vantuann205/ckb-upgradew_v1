@@ -1,35 +1,40 @@
 # Product
 
-## Register
+## Name
 
-CKB DAO Shelter
+CKB Upgrade Watch
 
 ## Users
 
-Nervos Spark reviewers evaluating whether the prototype addresses a real CKB holder need, and CKB holders considering their first Nervos DAO deposit.
+CKB holders deciding whether to rely on a token or script, and users who want to keep track of scripts they care about.
 
-## Product Purpose
+## Purpose
 
-CKB DAO Shelter helps holders model an illustrative secondary-issuance compensation scenario before depositing CKB. It makes the assumptions, occupied capacity, and two-phase withdrawal process visible so users can judge the trade-offs. For Spark reviewers, the prototype demonstrates a concrete holder workflow rather than claiming adoption or live protocol connectivity.
+Explain whether a pasted CKB Script references a specific binary hash or resolves code through a type-hash cell. Help holders understand what still needs checking before they rely on an asset.
 
-## Brand Personality
+## MVP boundary
 
-Precise, approachable, kinetic. The experience should feel credible to protocol-aware users while remaining legible to a first-time DAO depositor.
+- Scan a CKB address for live cells, CKB capacity, and scripts using mainnet or testnet indexer data.
+- Analyze Script JSON and distinguish fixed data references from Type Script references.
+- Resolve a matching live Type ID code cell, show its lock, and trace a bounded history through committed transactions.
+- Save Scripts and network in browser local storage for manual re-analysis.
+- Mark unknown locks, ambiguous matches, capped scans, and incomplete history instead of guessing.
+- Do not connect a wallet, sign transactions, calculate arbitrary token balances, identify real-world owners, run background monitoring, or send alerts.
 
-## Anti-references
+## Lookup limits
 
-- Lapse Astro is the source for the adapted landing-page layout, motion, styles, scripts, and selected licensed textures. Keep its product claims, testimonials, people, and brand out of CKB DAO Shelter.
-- Do not imply the particle wordmark or any visual is live CKB network activity.
-- Crypto interfaces that imply live network data, guaranteed yield, price protection, or a wallet connection that does not exist.
-- Decorative blockchain jargon, speculative metrics, or a generic token-trading dashboard.
+- Address scan: 500 cells.
+- Type ID search: 2,000 live cells.
+- History trace: 25 versions and 100 transaction lookups.
+- The selected RPC and indexer are public provider endpoints unless deployment environment variables override them.
 
-## Design Principles
+## Design principles
 
-- Put the holder's estimate and the CKB/DAO model at the center of the experience.
-- Distinguish protocol facts from editable demo assumptions.
-- Explain the lock and exit path before encouraging a first deposit.
-- Keep motion lightweight and illustrative. The CKBxDAO particle wordmark is branding, not a live network visualization.
+- Keep the existing landing-page composition and CKB mark while adapting all copy and diagrams to Upgrade Watch.
+- Put the working Script checker first and make limitations visible next to its result.
+- Use CKB documentation and transaction evidence as the source of truth, not unexplained risk scores.
+- Keep the particle wordmark as branding, not a live network visualization.
 
-## Accessibility & Inclusion
+## Accessibility
 
-Support keyboard navigation, visible focus, readable contrast, responsive layouts, and reduced-motion preferences. Essential calculations and protocol caveats remain available without animation.
+Support keyboard navigation, visible focus, readable contrast, responsive layouts, reduced-motion preferences, and useful content without animation.
