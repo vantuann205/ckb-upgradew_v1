@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 681" fill="none">
+  <rect width="1000" height="681" fill="#E9F1F8"/>
+  <path d="M0 113H1000M0 226H1000M0 339H1000M0 452H1000M0 565H1000M125 0V681M250 0V681M375 0V681M500 0V681M625 0V681M750 0V681M875 0V681" stroke="#AFC7DF" stroke-opacity=".28"/>
+  <rect x="88" y="118" width="824" height="446" rx="14" fill="#F8FBFF" stroke="#91AEC9" stroke-width="2"/>
+  <text x="128" y="169" fill="#536C86" font-family="monospace" font-size="19">CODE CELL HISTORY</text>
+  <path d="M173 271H827" stroke="#88A4BE" stroke-width="4"/>
+  <path d="M196 271v-37h186v37M458 271v-66h186v66M718 271v-27h86v27" stroke="#7797B5" stroke-width="2"/>
+  <circle cx="196" cy="271" r="13" fill="#2166C5"/>
+  <circle cx="458" cy="271" r="13" fill="#2166C5"/>
+  <circle cx="718" cy="271" r="13" fill="#B17439"/>
+  <rect x="134" y="324" width="208" height="130" rx="8" fill="#EAF2FA" stroke="#AAC0D5"/>
+  <text x="156" y="359" fill="#536C86" font-family="monospace" font-size="15">DEPLOYED</text>
+  <text x="156" y="394" fill="#405873" font-family="sans-serif" font-size="16">original binary</text>
+  <text x="156" y="424" fill="#72869B" font-family="monospace" font-size="13">tx · block · hash</text>
+  <rect x="396" y="324" width="208" height="130" rx="8" fill="#EAF2FA" stroke="#AAC0D5"/>
+  <text x="418" y="359" fill="#536C86" font-family="monospace" font-size="15">REPLACED</text>
+  <text x="418" y="394" fill="#405873" font-family="sans-serif" font-size="16">new binary</text>
+  <text x="418" y="424" fill="#72869B" font-family="monospace" font-size="13">tx · block · hash</text>
+  <rect x="656" y="324" width="208" height="130" rx="8" fill="#FBF2E7" stroke="#D5B081"/>
+  <text x="678" y="359" fill="#A66627" font-family="monospace" font-size="15">CURRENT</text>
+  <text x="678" y="394" fill="#805222" font-family="sans-serif" font-size="16">chain lookup needed</text>
+  <text x="678" y="424" fill="#94795B" font-family="monospace" font-size="13">example timeline</text>
+</svg>
