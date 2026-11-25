@@ -4,7 +4,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/vantuann205/escrow-templates?style=for-the-badge&logo=github)
 ![GitHub issues](https://img.shields.io/github/issues/vantuann205/escrow-templates?style=for-the-badge)
 ![Astro](https://img.shields.io/badge/Astro-7.x-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-22.12%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-22.23.4%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
 **A read-only inspection prototype for understanding how CKB scripts reference code, who controls the referenced code cell, and what on-chain replacement history can be verified.**
 
@@ -23,10 +23,10 @@ The app queries the selected public CKB RPC and indexer through server API route
 
 ## Run locally
 
-Requirements: Node.js 22.12 or newer.
+Requirements: Node.js 22.23.4 or newer. Run the commands below from the `ckb-upgradew_v1` directory.
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
