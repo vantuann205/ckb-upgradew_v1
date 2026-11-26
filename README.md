@@ -8,7 +8,7 @@
 
 **A read-only inspection prototype for understanding how CKB scripts reference code, who controls the referenced code cell, and what on-chain replacement history can be verified.**
 
-> **Live demo:** [Open the current Railway site](ckbupgrade.up.railway.app). This URL currently serves the previous DAO Shelter prototype; an Upgrade Watch deployment is not live yet.
+> **Live demo:** [ckbupgrade.up.railway.app](https://ckbupgrade.up.railway.app/)
 
 ## What it does
 
